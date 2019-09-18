@@ -47,16 +47,24 @@ public class MainActivity extends AppCompatActivity {
         classic = findViewById(R.id.tab_item_classic);
         pop = findViewById(R.id.tab_item_pop);
         viewPager = findViewById(R.id.viewPager);
-        recyclerView.findViewById(R.id.rv_rock);
+        recyclerView = findViewById(R.id.rv_rock);
 
         pageAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pageAdapter);
+
+        //new ExecuteNetworkCall("Rock", (TabLayout.OnTabSelectedListener) this).execute();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                new ExecuteNetworkCall(tab.getText().toString(), this).execute();
+                if (tab.getText().toString() == "Rock")
+                    new ExecuteNetworkCall("rock", this).execute();
+                else if (tab.getText().toString() == "Classic")
+                    new ExecuteNetworkCall("classic", this).execute();
+                else
+                    new ExecuteNetworkCall("pop", this).execute();
+
             }
 
             @Override
